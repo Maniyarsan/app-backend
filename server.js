@@ -7,8 +7,12 @@ const cors = require('cors');  // To handle CORS issues
 // Create an Express app
 const app = express();
 
-// Enable CORS (important for frontend-backend communication across different domains)
-app.use(cors());
+// Enable CORS
+app.use(cors({
+    origin: 'https://connect-with.netlify.app', // Allow your frontend's Netlify URL
+    methods: ['GET', 'POST'],                  // Allow specific HTTP methods
+    credentials: true                          // Allow cookies if needed
+}));
 
 // Serve the static files from the "frontend/public" folder (frontend)
 app.use(express.static(path.resolve(__dirname, '../frontend/public'))); // Use path.resolve for better path handling
