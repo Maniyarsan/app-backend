@@ -2,16 +2,20 @@ const express = require('express');
 const http = require('http');
 const WebSocket = require('ws');
 const path = require('path');  // Required for serving HTML files
+const cors = require('cors');  // To handle CORS issues
 
 // Create an Express app
 const app = express();
 
+// Enable CORS (important for frontend-backend communication across different domains)
+app.use(cors());
+
 // Serve the static files from the "frontend/public" folder (frontend)
-app.use(express.static(path.join(__dirname, '../frontend/public'))); // Path to the frontend/public folder
+app.use(express.static(path.resolve(__dirname, '../frontend/public'))); // Use path.resolve for better path handling
 
 // Explicitly handle the root route
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/public', 'index.html'));  // Serve index.html from frontend/public
+  res.sendFile(path.resolve(__dirname, '../frontend/public', 'index.html'));  // Serve index.html from frontend/public
 });
 
 // Create an HTTP server
